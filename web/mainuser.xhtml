@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>
+            <ui:insert name="title">Assist</ui:insert>
+
+        </title>
+        <h:outputStylesheet library="css" name="aces.css" />
+    </h:head>
+    <h:body style="background-image:url(/Assist/javax.faces.resource/css/img/ios-linen.png) ">
+
+
+
+
+
+        <div class="logoPanel">
+
+            <img src="/Assist/img/ases.png" class="logo" height="64" width="130" alt="logo2"  />
+            <!--h:graphicImage library="img" name="ases.png" styleClass="logo" /-->		
+        </div>		
+
+        <ui:include src="./Menus/topmenu.xhtml" />
+
+        <h:form id="form"  >
+
+            <p:panel header="User Maintenance Area" id="pnlall" widgetVar="pnlall"  style="width:99.5%; border-radius: 0px 0px 0px 0px !important;">
+
+
+                <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                    <f:facet name="start">  
+                        <div id="loading" >
+                            <div id="loading-container" >
+                                <img id="loading-image"  src="/Assist/img/bar-loader.gif" alt="Loading..." />
+                                <br/>
+                                <span style="margin-left:4px;">Loading ...</span>
+                            </div>
+                        </div> 
+                    </f:facet>  
+
+                    <f:facet name="complete">  
+                        <h:outputText value="" />  
+                    </f:facet>  
+                </p:ajaxStatus>  
+
+
+
+
+
+
+                <p:growl id="growl" widgetVar="growl" showDetail="true" autoUpdate="true" />
+                <p:blockUI block="pnluserdet" widgetVar="blockuserdet" id="blockuserdet"  blocked="#{true}"  /> 
+                <p:blockUI block="pnluserper" widgetVar="blockuserper" id="blockuserper"  blocked="#{true}" /> 
+
+                <h:panelGrid columns="2" style="width:100%; margin:0 0 0 0; padding:0 0 0 0;" columnClasses="leftcol,rightcol">
+
+
+
+
+
+                    <p:dataTable id="dtUser" var="u"  widgetVar="dtUser"
+                                 value="#{UserBean.activeUsers}" 
+                                 selection="#{UserBean.selectedUser}" 
+                                 selectionMode="single" style="width:100%"  
+                                 rowKey="#{u.userId}" sortMode="multiple" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" >
+                        <f:facet name="footer">  
+
+                            Selected row for see user details
+                        </f:facet>
+
+                        <p:ajax event="rowSelect" listener="#{UserBean.onRowSelect}" oncomplete="blockuserdet.hide(); blockuserper.hide();"     
+                                update=":form:pnlall :form:btnsave "  />  
+
+
+
+                        <p:column headerText="User Name" styleClass="coltext" filterBy="#{u.username}"  filterMatchMode="contains">
+                            <h:outputLabel value="#{u.username}" />
+                        </p:column>
+                        <p:column headerText="Name" styleClass="coltext" filterBy="#{u.name}" filterMatchMode="contains" >
+                            <h:outputLabel value="#{u.name}" />
+                        </p:column>
+                        <p:column headerText="Name" styleClass="coltext" filterBy="#{u.lastname}" filterMatchMode="contains" >
+                            <h:outputLabel value="#{u.lastname}" />
+                        </p:column>
+                        <p:column headerText="Active" styleClass="coltext">
+                            <h:outputLabel value="#{u.isActive  ? 'YES' : 'NO'}" styleClass="#{u.isActive ? 'greentext' : 'redtext'}" />
+                        </p:column>
+
+                        <p:column headerText="Locked" styleClass="coltext">
+                            <h:outputLabel value="#{u.islocked  ? 'YES' : 'NO'}" styleClass="#{u.islocked ? 'redtext' : 'greentext'}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+
+                    <h:panelGrid id="pnlUserControl" columns="1"  style="padding:0 0 0 0; margin:0 0 0 0; text-align: left; width:100%;  ">
+
+                        <p:toolbar id="usertoolbar"  style="padding: 0 0 0 0; margin-left:30px;  width:95%; " >  
+                            <p:toolbarGroup align="left" id="toolbargroup1" >  
+
+
+                                <p:commandButton id="btnsave" widgetVar="btnsave" value="SAVE" 
+                                                 actionListener="#{UserBean.save(event)}"  icon="ui-icon-disk"
+                                                 disabled="#{UserBean.currentUser.userId eq 0 or UserBean.currentUser.userId eq null}"  
+                                                 update=":form:pnlall :form:pnlUserControl :form:dtUser" />
+
+
+
+                                <p:commandButton id="btncancel" widgetVar="btncancel" value="CANCEL" 
+                                                 actionListener="#{UserBean.cancelEdit(event)}"  icon="ui-icon-cancel"
+                                                 disabled="#{UserBean.currentUser.userId eq 0 or UserBean.currentUser.userId eq null}"  
+                                                 update=":form:pnlall" />
+
+
+
+
+
+
+
+                            </p:toolbarGroup>  
+
+                            <p:toolbarGroup align="right">  
+
+
+                                <p:commandButton id="btnnew" widgetVar="btnnew" 
+                                                 value="Create New User"  styleClass="btn"
+                                                 icon="ui-icon-person" disabled="#{UserBean.currentUser.userId gt 0 or UserBean.currentUser.userId eq -1}"
+                                                 actionListener="#{UserBean.createNewUser(event)}" oncomplete="blockuserdet.hide(); blockuserper.hide();"  
+                                                 update=":form:pnlall :form:blockuserdet :form:blockuserper " />
+
+                            </p:toolbarGroup>  
+
+                        </p:toolbar>
+                        <p:panel id="pnluserdet"  header="User Information " widgetVar="pnluserdet"       style="padding: 0 0 0 0; margin-left:30px;  width:95%;  border-radius: 0px 0px 0px 0px !important;">
+
+
+
+
+                            <h:panelGrid columns="2" columnClasses="leftcol,leftcol"  style="width:100%">
+                                <h:panelGrid columns="1" style="width:50% ">
+
+                                    <h:outputLabel value="Username:"  />
+                                    <p:inputText value="#{UserBean.currentUser.username}" style="width:200px" disabled="#{!UserBean.createmode}" />
+
+                                    <h:outputLabel value="First Name:" />
+                                    <p:inputText value="#{UserBean.currentUser.name}" style="width:200px" />
+
+
+                                    <h:outputLabel value="Last Name:" />
+                                    <p:inputText value="#{UserBean.currentUser.lastname}" style="width:200px" />
+
+                                    <br/>
+                                    <h:panelGrid columns="2" cellpadding="2" style="width:100%; margin:0 0 0 0; padding:0 0 0 0;">
+
+                                        <p:selectBooleanCheckbox id="chkForcePassword" value="#{UserBean.forcePassword}"   >
+                                            <p:ajax update="pnluserdet"  process="@all" />
+                                        </p:selectBooleanCheckbox>
+
+                                        <h:outputLabel value="Force Change Password?" />
+                                    </h:panelGrid>
+
+                                    <h:panelGrid id="pnlPassword"    columns="1" rendered="#{UserBean.forcePassword ? true : false }"  style="margin:0 0 0 0; padding:0 0 0 0;">
+
+                                        <h:outputLabel value="Enter Reset Password:" />
+                                        <p:inputText value="#{UserBean.currentUser.password}"  style="width:200px" />
+
+
+
+                                    </h:panelGrid>
+
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="1">
+
+                                    <h:outputLabel value="Creation Date" />
+                                    <p:inputText value="#{UserBean.currentUser.creationDate}" disabled="true" style="width:200px" />
+
+                                    <h:outputLabel value="Last Login" />
+                                    <p:inputText value="#{UserBean.currentUser.lastloginDate}" disabled="true" style="width:200px" />
+
+
+                                    <h:outputLabel value="Last Change Password" />
+                                    <p:inputText value="#{UserBean.currentUser.lastChangePasswordDate}" disabled="true" style="width:200px" />
+
+
+
+
+
+
+                                    <h:outputLabel value="Locked Account" />
+                                    <p:selectOneRadio id="AccountOptions" style="width:150px" value="#{UserBean.currentUser.islocked}"    >  
+                                        <f:selectItem itemLabel="YES" itemValue="#{true}" />  
+                                        <f:selectItem itemLabel="NO" itemValue="#{false}" />  
+
+                                    </p:selectOneRadio> 
+
+                                    <h:outputLabel value="Status:" />
+                                    <p:selectOneRadio id="StatusOptions" style="width:150px" value="#{UserBean.currentUser.isActive}">  
+                                        <f:selectItem itemLabel="Active" itemValue="#{true}"  />  
+                                        <f:selectItem itemLabel="Inactive" itemValue="#{false}" />  
+
+                                    </p:selectOneRadio>  
+
+
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+
+
+                        </p:panel>
+
+                        <p:panel id="pnluserper" widgetVar="pnluserper" header="Permissions"  style="padding: 0 0 0 0;    margin-left:30px;  width:95%;  border-radius: 0px 0px 0px 0px !important;"  >  
+
+                            
+                           
+                            <h:panelGrid columns="3" style=" column-width:100px;" id="pnlEditPerm" rendered="#{UserBean.selectedPermision.procid ne 0}"  >
+                                
+                                <h:outputLabel value="Process Name" style="font-weight:bold" />
+                                <h:outputLabel value="Permision" style="font-weight:bold" />
+                                <h:outputLabel value="" />
+                                
+                                <p:selectOneMenu id="somPermEdit" widgetVar="somPermEdit" value="#{UserBean.selectedPermision.procid}" style="width:200px" disabled="true"  >
+                                    <f:selectItems value="#{UserBean.permisions}" var="p" itemLabel="#{p.processName}" itemValue="#{p.procid}" />
+                                    <p:ajax event="change" listener="#{UserBean.updateSelectedRole(event)}" update=":form:somPerm" />
+                                </p:selectOneMenu>
+                                
+                                <p:selectOneMenu id="somPerm"   value="#{UserBean.selectedPermisionKey}" style="width:200px"    >
+
+                                                <f:selectItem itemLabel="Access" itemValue="1" />
+                                                <f:selectItem itemLabel="Restricted" itemValue="0" />
+
+                                              
+                              </p:selectOneMenu>
+                                <h:panelGrid columns="2">
+                                    <p:commandButton id="btnsaverole" widgetVar="btnsaverole" value="Save"  ajax="true" immediate="true"
+                                                    actionListener="#{UserBean.saveRole(event)}"  icon="ui-icon-disk"
+                                                    update=":form:pnlall" />
+                                    
+                                    <p:button value="Cancel" />
+                                </h:panelGrid>
+                            </h:panelGrid>
+                   
+                            
+                            <p:dataTable id="dtRoles" widgetVar="dtRoles" value="#{UserBean.permisions}" selectionMode="single" selection="#{UserBean.selectedPermision}" 
+                                         style="width:100%;margin-left:0; margin-right:0; padding: 0 0 0 0;" 
+                                         var="r" rowKey="#{r.procid}" 
+                                         paginator="false" 
+                                          >
+
+                <p:ajax event="rowSelect" listener="#{UserBean.onRowSelectPerm}" update=":form:pnluserper "  />  
+                                
+                                
+                            
+
+                                <p:column headerText="Process Name">
+                                    <h:outputLabel value="#{r.processName}" />
+                                </p:column>
+
+                                <p:column headerText="Permision" >
+                                            <h:outputText value="#{r.havePermision ? 'Access' : 'Restricted'}" ></h:outputText>
+                                   
+                                </p:column>
+
+                <f:facet name="footer" >
+                    
+                    Selected row for edit process permisions
+                    
+                </f:facet>
+                
+                            </p:dataTable>
+
+
+
+                        </p:panel> 
+
+                    </h:panelGrid>
+
+
+                </h:panelGrid>   
+
+                <p:messages showDetail="true" id="msg"  autoUpdate="true" />
+
+
+            </p:panel>
+
+
+        </h:form>        
+
+
+    </h:body>
+</html>
+
+

@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+   
+    <h:form>
+    
+    <p:growl id="messages"/>
+
+    <p:menubar style="padding-left:180px;border-radius: 0px 0px 0px 0px !important;">
+        <p:menuitem value="Daily Process" icon="ui-icon-transferthick-e-w"  url="./DaliyProcess.xhtml" style="width:120px" />
+        <p:menuitem value="Platino QRY/RES" icon="ui-icon-note" style="width:130px" />
+            
+        
+        <p:submenu label="Monthly Process" icon="ui-icon-folder-collapsed" style="width:150px">
+            <p:menuitem value="Export ALL" url="#" icon="ui-icon-arrowreturnthick-1-w" style="width:170px" />
+            <p:menuitem value="MBHO Roll" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:150px" />
+              <p:menuitem value="CMS Medicaid" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:150px" />
+              <p:menuitem value="CMS Medicaid Eligible" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:150px" />
+              <p:menuitem value="PAM Monthly Count" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:150px" />
+              <p:menuitem value="PICA Enroll" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:150px" />
+              <p:menuitem value="Accumulation" url="#" icon="ui-icon-arrowreturnthick-1-e" style="width:300px" />
+        </p:submenu>
+
+        <p:menuitem value="Prem Payments" icon="ui-icon-document" />
+           
+        
+         <p:submenu label="Administration" icon="ui-icon-key" style="padding-left:20px">
+             <p:menuitem value="Users Management" url="./mainuser.xhtml" />
+                
+                <p:menuitem value="Roles Management"/>
+                
+                <p:separator/>
+                
+                
+                <p:menuitem value="Reports"/>
+                
+                
+            </p:submenu>
+        
+       
+        
+        <!--p:submenu label="Help" icon="ui-icon-help">
+            <p:menuitem value="Contents" url="#" />
+            <p:submenu label="Search" icon="ui-icon-search">
+                <p:submenu label="Text">
+                    <p:menuitem value="Workspace" url="#" />
+                </p:submenu>
+                <p:menuitem value="File" url="#" />
+            </p:submenu>
+        </p:submenu>
+
+        <p:submenu label="Actions" icon="ui-icon-gear">
+            <p:submenu label="Ajax" icon="ui-icon-refresh">
+                <p:menuitem value="Save" actionListener="#{menuBean.save}" icon="ui-icon-disk" update="messages"/>
+                <p:menuitem value="Update" actionListener="#{menuBean.update}" icon="ui-icon-arrowrefresh-1-w" update="messages"/>
+            </p:submenu>
+            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+                <p:menuitem value="Delete" actionListener="#{menuBean.delete}" icon="ui-icon-close" update="messages" ajax="false"/>
+            </p:submenu>
+        </p:submenu>
+
+        <p:menuitem value="Quit" url="http://www.primefaces.org" icon="ui-icon-close" /-->
+
+        <f:facet name="options">
+          
+            <p:commandButton type="button" value="Logout" icon="ui-icon-extlink" />
+        </f:facet>
+    </p:menubar>
+    
+    </h:form>
+</ui:composition>

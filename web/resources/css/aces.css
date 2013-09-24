@@ -1,0 +1,139 @@
+* {
+margin: 0;
+}
+html, body {
+height: 100%;
+margin-top:1%;
+margin-left:10%;
+margin-right:10%;
+background-color: #A19A9D;
+/*background-image:url(/Assist/img/ios-linen.png); */
+}
+.wrapper {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+margin: 0 auto -4em;
+}
+.footer, .push {
+height: 4em;
+}
+
+.tinyfont{
+	font-size: 14px;
+	color:white;
+}
+.logoPanel{
+	
+	border-top-left-radius: 50px 50px;
+	border-top-right-radius: 50px 50px;
+	width: 160px;
+	height:65px;
+        
+	background-color: white;
+	padding-top:0px;
+	padding-left: 18px
+	
+}
+.logo{
+    padding-top:15px;
+}
+
+.ui-widget {
+   font-size: 12px !important;
+}
+
+.leftcol {
+    width: 50%;
+    text-align: left;
+    vertical-align:top;
+}
+
+.rightcol {
+    width: 50%;
+    text-align: right;
+    vertical-align:top; 
+    
+}
+.coltext{
+    text-align: left;
+    vertical-align: top;
+}
+
+.greentext{
+    
+    color:green;
+    font-weight: bold;
+    text-align:center;
+}
+.redtext{
+    color:red;
+    font-weight:bold;
+    text-align:center;
+}
+
+#loading {
+    
+    
+    
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  
+  left:0px;
+  
+  position: fixed;
+  display: block;
+ 
+  /*
+  opacity: 0.7;
+  background-color: #fff;
+  */
+  z-index: 98;
+  text-align: center;
+
+  
+  background: rgb(60, 60, 60);
+  background: rgba(60, 60, 60, 0.4);
+
+}
+
+#loading-image {
+ /* position: absolute;*/
+ /* top: 100px;
+  margin-left:auto;
+  margin-right: auto;*/
+ 
+  z-index: 100;
+}
+
+
+#loading-container{
+    position: absolute;
+    border-bottom-left-radius: 20px 20px;
+    border-bottom-right-radius: 20px 20px;
+    width: 250px;
+    height:55px;
+    font-size:20px;
+    
+    
+    left:44%;
+    right:56%;
+    
+    opacity:1; 
+    background-color: white;
+    border-color: black;
+    border-width:0px; 
+    padding-top:10px;
+    z-index:99;
+	
+    
+}
+.btn{
+    
+    background-color: #838b98;
+    height:30px;
+    color:white;
+    font-size:14px 
+    
+}

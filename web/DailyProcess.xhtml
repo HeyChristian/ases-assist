@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>
+            <ui:insert name="title">ASSIST - Daily Process</ui:insert>
+
+        </title>
+        <h:outputStylesheet library="css" name="aces.css" />
+    </h:head>
+    <h:body style="background-image:url(/Assist/javax.faces.resource/css/img/ios-linen.png) ">
+
+
+
+
+
+        <div class="logoPanel">
+
+            <img src="/Assist/img/ases.png" class="logo" height="64" width="130" alt="logo2"  />
+            <!--h:graphicImage library="img" name="ases.png" styleClass="logo" /-->		
+        </div>		
+
+        <ui:include src="./Menus/topmenu.xhtml" />
+
+        <h:form id="form"  >
+
+            <p:panel header="Daily Process" id="pnlall" widgetVar="pnlall"  style="width:99.5%; border-radius: 0px 0px 0px 0px !important;">
+
+
+                <p:ajaxStatus style="width:16px;height:16px;" id="ajaxStatusPanel">  
+                    <f:facet name="start">  
+                        <div id="loading" >
+                            <div id="loading-container" >
+                                <img id="loading-image"  src="/Assist/img/bar-loader.gif" alt="Loading..." />
+                                <br/>
+                                <span style="margin-left:4px;">Loading ...</span>
+                            </div>
+                        </div> 
+                    </f:facet>  
+
+                    <f:facet name="complete">  
+                        <h:outputText value="" />  
+                    </f:facet>  
+                </p:ajaxStatus>  
+
+
+
+
+
+
+                <p:growl id="growl" widgetVar="growl" showDetail="true" autoUpdate="true" />
+             
+                <h:panelGrid columns="2" style="width:100%; margin:0 0 0 0; padding:0 0 0 0;" columnClasses="leftcol,rightcol">
+
+
+
+
+
+                    <p:dataTable id="dtFiles" var="f"  widgetVar="dtUser"
+                                 value="#{dailyBean.files}" 
+                                 selection="#{dailyBean.selectedFiles}" 
+                                 style="width:100%" rowKey="#{f.name}"  
+                            rowIndexVar="rowIndex"
+                            sortMode="multiple" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom" rows="15" >
+                        
+                        
+                        
+                        
+                         <p:column selectionMode="multiple" style="width:2%" /> 
+
+                        <p:column headerText="File Name" styleClass="coltext" >
+                            <h:outputLabel value="#{f.name}" />
+                        </p:column>
+                        <p:column headerText="Date" styleClass="coltext"  >
+                            <h:outputLabel value="#{f.date}" />
+                        </p:column>
+                        <p:column headerText="Time" styleClass="coltext"  >
+                            <h:outputLabel value="#{f.time}" />
+                        </p:column>
+                        <p:column headerText="Size" styleClass="coltext"  >
+                            <h:outputLabel value="#{f.size}" />
+                        </p:column>
+                       
+                        
+                        
+                    </p:dataTable>
+
+
+                    <h:panelGrid id="pnlLogArea" columns="1"  style="padding:0 0 0 0; margin:0 0 0 0; text-align: left; width:100%;  ">
+
+                        
+                        <p:fieldset>
+                            <legend>
+                                
+                                        
+                                
+                            </legend>
+                            
+                            <h:panelGrid columns="2" columnClasses="leftcol,rightcol" style="width:100%" >
+                                <h:panelGrid columns="1" style="width:80%">
+                                
+                                <h:outputLabel value="Update Date" />
+                                <p:calendar value="#{dailyBean.updateDate}" id="calDate" showOn="button" pattern="MM-dd-yyyy" required="true"  />   
+                                
+                                
+                                <h:outputLabel value="Process Time" />
+                                <p:calendar value="#{dailyBean.processTime}" pattern="HH:mm a" timeOnly="true" required="true" />  
+  
+                                
+                                
+                            </h:panelGrid>
+                            
+                                <h:panelGrid columns="1" style="width:100%">
+                                    
+                                    <p:commandButton value="Merge" style="width:200px" icon="ui-icon-signal-diag" actionListener="#{dailyBean.merge()}" onstart="refresh.Start()" onsuccess="refresh.Stop()"  />
+                                    <p:commandButton value="Continue" style="width:200px" icon="ui-icon-circle-arrow-e" />
+                                    
+                                    <p:commandButton value="Cancel" style="width:200px; " icon="ui-icon-closethick" immediate="true"  />
+                                    
+                                    
+                                    
+                                </h:panelGrid>  
+                                
+                                
+                            </h:panelGrid>
+                            <p:poll interval="1" autoStart="false" stop="true" update="txtLog" widgetVar="refresh" id="refresh" />
+                        </p:fieldset>
+                       
+                        <p:fieldset legend="Log Detail">
+                            
+                            <h:inputTextarea  rows="14" id="txtLog"  style="width:100%"  readonly="true" />
+                            
+                        </p:fieldset>
+                        
+
+                    </h:panelGrid>
+
+
+                </h:panelGrid>   
+
+                <p:messages showDetail="true" id="msg"  autoUpdate="true" />
+
+
+            </p:panel>
+
+
+        </h:form>        
+
+
+    </h:body>
+</html>
+
+
